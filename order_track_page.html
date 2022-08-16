@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details Draf</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
+        :root {
+            --primaryColor: #95CA33;
+            --secondaryColor: #FFFFFF;
+            --themeFont: "Ubuntu";
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .s0212_universal * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--themeFont);
+        }
+
+        .s0212_container {
+            max-width: 1340px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .s0201_order_details_main_wrapper {
+            max-width: 100%;
+            height: 100vh;
+            /* background-color: rgba(30, 39, 46, 85%); */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(30, 39, 46, .5);
+        }
+
+        .s0212_order_details_area_wrapper {
+            width: 320px;
+            height: 80vh;
+            background-color: var(--secondaryColor);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .s0201_order_details_top_area_wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .s0212_order_progress_info_main_wrapper {
+            padding-top: 16px;
+        }
+
+        .s0212_order_progress_list {
+            list-style: none;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .s0212_order_progress_area {
+            position: relative;
+        }
+
+        .s0212_order_progress_area_border::after {
+            content: "";
+            height: 100%;
+            width: 1px;
+            background-color: rgba(30, 39, 46, 10%);
+            position: absolute;
+            top: 20px;
+            right: calc(100% - 9px);
+        }
+
+        .s0212_order_progress_status::after {
+            content: "";
+            height: 16px;
+            width: 16px;
+            background-color: rgba(46, 204, 112, 100%);
+            position: absolute;
+            border-radius: 50%;
+            left: -5px;
+            top: -4px;
+            border: 5px solid white;
+            z-index: 9;
+        }
+
+        .s0212_order_shipped_status::after {
+            content: "";
+            height: 16px;
+            width: 16px;
+            position: absolute;
+            border-radius: 50%;
+            left: 0;
+            background-color: rgba(255, 84, 94, 100%);
+            top: 0;
+        }
+
+        .s0212_order_status_uncomplete::after {
+            content: "";
+            height: 14px;
+            width: 14px;
+            position: absolute;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+            border: 1px solid rgba(30, 39, 46, 0.50);
+        }
+
+        .s0212_order_shipped_status::after {
+            content: "";
+            height: 16px;
+            width: 16px;
+            position: absolute;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+            background-color: rgba(255, 94, 87, 100%);
+        }
+
+        .s0212_order_progress_status_in_complete::after {
+            content: "";
+            height: 16px;
+            width: 16px;
+            position: absolute;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+            /* background-color: rgba(255, 94, 87, 100%); */
+            border: 1px solid rgba(30, 39, 46, 100%);
+            background-color: transparent;
+        }
+
+        .s0212_order_progress_status.s0212_order_progress_item {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li.s0212_order_shipped_status.s0212_order_progress_item {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li.s0212_order_status_uncomplete.s0212_order_progress_item {
+            margin-left: 25px;
+        }
+
+        .s0212_order_progress_list:last-child {
+            margin-bottom: 0px;
+            position: relative;
+            height: 20px;
+        }
+
+        .s0212_order_progress_status.s0212_order_progress_item:last-child {
+            margin: 0;
+            margin-left: 25px;
+        }
+
+        span.s0212_success_sign {
+            top: -4px;
+            left: 4.49px;
+            position: absolute;
+        }
+
+        span.s0212_order-placed_time {
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(30, 39, 46, 50%);
+        }
+
+        p.s0212_order-placed_text {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(30, 39, 46, 100%);
+        }
+
+        .s0212_order_info_area_wrapper {
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+
+        .s0212_order_id_info_wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .s0212_order_id_info_main_wrapper {
+            width: calc(100% - 145px);
+        }
+
+        .s0212_order_info_details_area_wrapper {
+            margin-top: 10px;
+        }
+
+        .s0212_order_info_title {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .s0212_order_id_info_wrapper {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(30, 39, 46, 45%);
+            margin-bottom: 10px;
+        }
+
+        .s0212_delivery_address_content_wrapper {
+            margin-top: 10px;
+        }
+
+        p.s0212_delivery_address_title {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .s0212_delivery_location_wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .s0212_delivery_option {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--primaryColor);
+        }
+
+        .s0212_address_number {
+            font-size: 12px;
+            color: rgba(30, 39, 46, 45%);
+        }
+
+        .s0212_location_top_area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 12px;
+            color: rgba(30, 39, 46, 45%);
+        }
+
+        .s0212_delivary_address_wrapper {
+            margin-top: 15px;
+            font-size: 12px;
+            color: rgba(30, 39, 46, 45%);
+        }
+
+        .s0212_product_img_wrapper {
+            width: 75px;
+            border: 1px solid rgba(30, 39, 46, 0.05);
+        }
+
+        .s0212_product_img_wrapper img {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .s0212_product_info_area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .s0212_product_info {
+            width: calc(100% - 75px);
+        }
+
+        .product_name_quantyt_main_warapper {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        span.s0212_product_name {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        span.s0212_product_qty {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(30, 39, 46, 45%);
+        }
+
+        .s0212_footer_top_and_review_area_wrapper {
+            margin-top: 25px;
+        }
+
+        span.s0212_product_weight {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(30, 39, 46, 45%);
+        }
+
+        .s0212_product_price_wrapper {
+            display: flex;
+            width: fit-content;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        span.s0212_new_price {
+            color: var(--primaryColor);
+            position: relative;
+            width: fit-content;
+        }
+
+
+        .s0212_old_price_delete::after {
+            content: "";
+            height: 2px;
+            width: 100%;
+            background-color: rgba(30, 39, 46, 50%);
+            position: absolute;
+            left: 0px;
+            top: 49%;
+        }
+
+        .s0212_old_price {
+            position: relative;
+
+        }
+
+        span.s0212_old_price {
+            color: rgba(30, 39, 46, 50%);
+        }
+
+        span.s0212_write_review_text {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--primaryColor);
+        }
+
+        .s0212_product_rating {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 5px;
+            margin-top: 11px;
+        }
+
+        .s0212_product_review_main_wrapper {
+            margin-top: 15px;
+        }
+
+        .s0212_review_field {
+            width: 100%;
+            padding: 9.5px 10px;
+            font-size: 12px;
+            font-weight: 400;
+            border: none;
+            outline: none;
+            background-color: rgba(30, 39, 46, 0.05);
+        }
+
+        .s0212_input_review_box {
+            margin-top: 15px;
+        }
+
+        .s0212_review_submit_button_wrapper {
+            margin-top: 15px;
+        }
+
+        .s0212_review_submit_button {
+            padding: 9.5px 20px;
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            background-color: var(--primaryColor);
+            color: var(--secondaryColor);
+        }
+
+        .s0212_order_details_footer_product_area {
+            margin-top: 17px;
+        }
+
+        form.s0212_review_form {
+            border-bottom: 1px solid rgba(112, 112, 112, 10%);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .s0212_product_info_area {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid rgba(112, 112, 112, .10);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+        }
+
+        .s0212_sub_total_baner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .s0212_sub_total_priceing_container {
+            height: 64px;
+            width: 150px;
+            background-color: rgba(112, 112, 112, .05);
+        }
+
+        .s0212_sub_total_priceing_container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .s0212_bdt_total_price {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .s0212_sub_total_title {
+            font-size: 10px;
+            font-weight: 400;
+
+        }
+
+        p.s0212_drop_your_review_text {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .s0212_order_cancel_button_wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .s0212_order_cancel_button button {
+            border: none;
+            height: 32px;
+            width: 113px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--secondaryColor);
+            background-color: rgba(255, 94, 87, 100%);
+            transition: all .3s ease;
+            cursor: pointer;
+        }
+
+        .s0212_order_cancel_button button:hover {
+            background-color: rgba(30, 39, 46, 100%);
+
+        }
+
+
+
+
+        /* order product details design for pc */
+        .s0212_order_details_product_top_area_wrapper {
+            margin-top: 48px;
+            display: none;
+        }
+
+        .s0212_order_details_product_top_area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .s0212_product_image_wrapper {
+            height: 60px;
+            width: 60px;
+            border: 1px solid rgba(112, 112, 112, .10);
+        }
+
+        .s0212_product_image_wrapper img {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .s0212_product_price_weight_wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .s0212_product_image_info_area {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .s0212_product_name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .s0212_product_weight {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(112, 112, 112, 10%);
+        }
+
+        .s0212_order_product_left_side_content_wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 69px;
+        }
+
+        span.s0212_product_qty_text {
+            font-size: 14px;
+            color: rgba(30, 39, 46, .5);
+        }
+
+        .s0212_review_rating {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .s0212_drop_review_main_wrapper {
+            margin-top: 16px;
+            display: none;
+        }
+
+        .s0212_review_rating_wrapper {
+            margin-top: 10px;
+        }
+
+        .s0212_input_field_review {
+            padding: 10px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            outline: none;
+            background-color: rgba(112, 112, 112, .05);
+            width: 100%;
+        }
+
+        form.s0212_drop_review_form_wrapper {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(30, 39, 46, .05);
+        }
+
+        .s0212_submit_button {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            color: var(--secondaryColor);
+            background-color: var(--primaryColor);
+            cursor: pointer;
+            transition: all .3s linear;
+        }
+
+        .s0212_submit_button:hover {
+            background-color: rgba(30, 39, 46, 100%);
+        }
+
+        .s0212_submit_button_wrapper {
+            margin-top: 20px;
+        }
+
+        .fotter_bottom_more_product {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(112, 112, 112, .05);
+        }
+
+        .s0201_large_device_subtotal_baner {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+
+        /* draf progess bar */
+
+
+        .s0212_order_progress {
+            display: flex;
+            gap: 11px;
+            margin-bottom: 20px;
+
+        }
+
+        .s0212_order_progress_wrapper {
+            position: relative;
+        }
+
+        .s0212_order_progress:last-child {
+            margin-bottom: 0px;
+        }
+
+        .s0212_order_progress_disk {
+            position: relative;
+
+        }
+
+        span.s0212_success_icon {
+            z-index: 99;
+            position: relative;
+            left: 4px;
+            top: -4px;
+            width: 100%;
+        }
+
+        .s0212_order_progress_area_main_wrapper {
+            margin-top: 16px;
+        }
+
+        .s0212_order_description {
+            position: relative;
+        }
+
+        .s0212_order_description_border::after {
+            content: "";
+            height: 100%;
+            width: 2px;
+            background-color: rgba(30, 39, 46, .1);
+            position: absolute;
+            top: 0;
+            right: calc(100% - 9px);
+        }
+
+        span.s0212_order_description_text {
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(30, 39, 46, 50%);
+        }
+
+        span.s0212_order_process_text {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+
+
+
+
+        @media screen and (min-width:640px) {
+            .s0212_order_details_area_wrapper {
+                width: 600px;
+                padding: 25px;
+            }
+
+            .s0212_order_details_footer_area_main_wrapper {
+                display: none;
+            }
+
+            .s0212_order_info_area_wrapper {
+                margin-top: 0px;
+
+            }
+
+            .s0212_order_progress_area_wrapper {
+                width: 50%;
+            }
+
+            .s0212_order_progress_info_main_wrapper {
+                display: flex;
+                gap: 45px;
+            }
+
+            .s0212_order_details_product_top_area_wrapper {
+                display: block;
+            }
+
+            .s0212_product_price_wrapper {
+                display: block;
+
+            }
+
+            .s0212_drop_review_main_wrapper {
+                margin-top: 16px;
+                display: block;
+            }
+
+            p.s0212_order-placed_text {
+                font-size: 14px;
+            }
+
+            span.s0212_order_process_text {
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            span.s0212_order_description_text {
+                font-size: 12px;
+            }
+
+            span.s0212_order-placed_time {
+                font-size: 12px;
+            }
+
+            .s0212_order_info_title {
+                font-size: 14px;
+            }
+
+            p.s0212_delivery_address_title {
+                font-size: 14px;
+            }
+
+            span.s0212_product_name {
+                font-size: 14px;
+            }
+
+            .s0212_product_price_wrapper {
+                font-size: 14px;
+            }
+
+            span.s0212_write_review_text {
+                font-size: 14px;
+            }
+
+            span.s0212_drop_your_review_text {
+                font-size: 14px;
+            }
+
+
+
+
+
+
+            .s0212_bdt_total_price {
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .s0212_sub_total_title {
+                font-size: 12px;
+                font-weight: 400;
+            }
+
+            .s0212_order_cancel_button button {
+                height: 36px;
+                width: 125px;
+                font-size: 14px;
+            }
+
+
+        }
+
+        @media screen and (min-width:1025px) {
+            .s0212_order_details_area_wrapper {
+                width: 710px;
+                padding: 30px;
+            }
+
+            .s0212_bdt_total_price {
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .s0212_sub_total_title {
+                font-size: 12px;
+                font-weight: 400;
+            }
+
+            .s0212_order_cancel_button button {
+                height: 36px;
+                width: 125px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="s0212_order_details_main_section s0212_universal">
+        <div class="s0201_order_details_main_wrapper">
+            <div class="s0212_order_details_area_wrapper">
+                <!-- order details top area -->
+                <div class="s0201_order_details_top_area_wrapper">
+                    <div class="s0212_order_details_title_wrapper">
+                        <span>Order Details</span>
+                    </div>
+                    <div class="s0212_order_details_popup_close_btn_wrapper">
+                        <span>
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13">
+                                    <path id="Cross"
+                                        d="M3059.72,2004.9l-5.318,5.318-1.182-1.182,5.318-5.318-5.317-5.317,1.182-1.182,5.317,5.317,5.318-5.318,1.182,1.182-5.318,5.318,5.319,5.318-1.182,1.182Z"
+                                        transform="translate(-3053.22 -1997.222)" fill="#95ca33" />
+                                </svg>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- order details info area / cut kore rakha ai text er niche bosbe-->
+                <div class="s0212_order_progress_info_main_wrapper">
+                    <!-- order progress area -->
+                    <div class="s0212_order_progress_area_main_wrapper">
+                        <div class="s0212_order_progress_wrapper">
+                            <div class="s0212_order_progress s0212_order_description_border">
+                                <div class="s0212_order_progress_disk">
+                                    <div class="s0212_order_progress_status">
+                                        <span class="s0212_success_icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                                width="8" height="5.6" viewBox="0 0 8 5.6">
+                                                <path id="Path"
+                                                    d="M6.795.205a.71.71,0,0,1,1,0,.7.7,0,0,1,0,.99l-4.235,4.2a.71.71,0,0,1-1,0L.207,3.062a.7.7,0,0,1,0-.99.71.71,0,0,1,1,0L3.059,3.91Z"
+                                                    fill="#fff" />
+                                            </svg>
+                                        </span>
+                                        <span class="s0212_shipped_icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                                width="6.086" height="6.086" viewBox="0 0 6.086 6.086">
+                                                <path id="icon"
+                                                    d="M4.939.061h0a.208.208,0,0,0-.295,0L2.5,2.206.356.061a.208.208,0,0,0-.295,0h0a.208.208,0,0,0,0,.295L2.206,2.5.061,4.645a.208.208,0,0,0,0,.295h0a.208.208,0,0,0,.295,0L2.5,2.795,4.645,4.939a.208.208,0,0,0,.295,0h0a.208.208,0,0,0,0-.295L2.795,2.5,4.939.356a.208.208,0,0,0,0-.295Z"
+                                                    transform="translate(0.543 0.543)" fill="#fff" stroke="#fff"
+                                                    stroke-width="1" />
+                                            </svg>
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="s0212_order_description">
+                                    <span class="s0212_order_process_text">Order Placed</span> <br>
+                                    <span class="s0212_order_description_text">Your order was placed on 23th January
+                                        2021.</span>
+                                </div>
+                            </div>
+                            <div class="s0212_order_progress">
+                                <div class="s0212_order_progress_disk s0212_order_progress_status">
+                                    <span class="s0212_success_icon"> <svg xmlns="http://www.w3.org/2000/svg" width="8"
+                                            height="5.6" viewBox="0 0 8 5.6">
+                                            <path id="Path"
+                                                d="M6.795.205a.71.71,0,0,1,1,0,.7.7,0,0,1,0,.99l-4.235,4.2a.71.71,0,0,1-1,0L.207,3.062a.7.7,0,0,1,0-.99.71.71,0,0,1,1,0L3.059,3.91Z"
+                                                fill="#fff" />
+                                        </svg>
+                                    </span>
+                                    <span class="s0212_shipped_icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="6.086" height="6.086" viewBox="0 0 6.086 6.086">
+                                            <path id="icon"
+                                                d="M4.939.061h0a.208.208,0,0,0-.295,0L2.5,2.206.356.061a.208.208,0,0,0-.295,0h0a.208.208,0,0,0,0,.295L2.206,2.5.061,4.645a.208.208,0,0,0,0,.295h0a.208.208,0,0,0,.295,0L2.5,2.795,4.645,4.939a.208.208,0,0,0,.295,0h0a.208.208,0,0,0,0-.295L2.795,2.5,4.939.356a.208.208,0,0,0,0-.295Z"
+                                                transform="translate(0.543 0.543)" fill="#fff" stroke="#fff"
+                                                stroke-width="1" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="s0212_order_description">
+                                    <span class="s0212_order_process_text">Order Approved</span> <br>
+                                    <span class="s0212_order_description_text">Your order was placed on 23th January
+                                        2021.</span>
+                                </div>
+                            </div>
+                            <div class="s0212_order_progress">
+                                <div class="s0212_order_progress_disk s0212_order_shipped_status">
+                                    <span class="s0212_success_icon"> <svg xmlns="http://www.w3.org/2000/svg" width="8"
+                                            height="5.6" viewBox="0 0 8 5.6">
+                                            <path id="Path"
+                                                d="M6.795.205a.71.71,0,0,1,1,0,.7.7,0,0,1,0,.99l-4.235,4.2a.71.71,0,0,1-1,0L.207,3.062a.7.7,0,0,1,0-.99.71.71,0,0,1,1,0L3.059,3.91Z"
+                                                fill="#fff" />
+                                        </svg>
+                                    </span>
+                                    <span class="s0212_success_icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="6.086" height="6.086" viewBox="0 0 6.086 6.086">
+                                            <path id="icon"
+                                                d="M4.939.061h0a.208.208,0,0,0-.295,0L2.5,2.206.356.061a.208.208,0,0,0-.295,0h0a.208.208,0,0,0,0,.295L2.206,2.5.061,4.645a.208.208,0,0,0,0,.295h0a.208.208,0,0,0,.295,0L2.5,2.795,4.645,4.939a.208.208,0,0,0,.295,0h0a.208.208,0,0,0,0-.295L2.795,2.5,4.939.356a.208.208,0,0,0,0-.295Z"
+                                                transform="translate(0.543 0.543)" fill="#fff" stroke="#fff"
+                                                stroke-width="1" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="s0212_order_description">
+                                    <span class="s0212_order_process_text">Order Shipped</span> <br>
+                                    <span class="s0212_order_description_text">Your order was placed on 23th January
+                                        2021.</span>
+                                </div>
+                            </div>
+                            <div class="s0212_order_progress">
+                                <div class="s0212_order_progress_disk s0212_order_progress_status_in_complete">
+                                    <span class="s0212_success_icon"> <svg xmlns="http://www.w3.org/2000/svg" width="8"
+                                            height="5.6" viewBox="0 0 8 5.6">
+                                            <path id="Path"
+                                                d="M6.795.205a.71.71,0,0,1,1,0,.7.7,0,0,1,0,.99l-4.235,4.2a.71.71,0,0,1-1,0L.207,3.062a.7.7,0,0,1,0-.99.71.71,0,0,1,1,0L3.059,3.91Z"
+                                                fill="#fff" />
+                                        </svg>
+                                    </span>
+                                    <span class="s0212_shipped_icon"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="6.086" height="6.086" viewBox="0 0 6.086 6.086">
+                                            <path id="icon"
+                                                d="M4.939.061h0a.208.208,0,0,0-.295,0L2.5,2.206.356.061a.208.208,0,0,0-.295,0h0a.208.208,0,0,0,0,.295L2.206,2.5.061,4.645a.208.208,0,0,0,0,.295h0a.208.208,0,0,0,.295,0L2.5,2.795,4.645,4.939a.208.208,0,0,0,.295,0h0a.208.208,0,0,0,0-.295L2.795,2.5,4.939.356a.208.208,0,0,0,0-.295Z"
+                                                transform="translate(0.543 0.543)" fill="#fff" stroke="#fff"
+                                                stroke-width="1" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="s0212_order_description">
+                                    <span class="s0212_order_process_text">Order Delivered</span> <br>
+                                    <span class="s0212_order_description_text">Your order was placed on 23th January
+                                        2021.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- order info and addrerss -->
+                    <div class="s0212_order_details_info_address_main_wrapper">
+                        <div class="s0212_order_info_area_wrapper">
+                            <div class="s0212_order_info_title_warapper">
+                                <p class="s0212_order_info_title">Order Info</p>
+                            </div>
+
+                            <div class="s0212_order_info_details_area_wrapper">
+                                <div class="s0212_order_id_main_wrapper">
+                                    <div class="s0212_order_id_info_wrapper">
+                                        <div class="s0212_order_id_wrapper">
+                                            <p class="s0212_order-id_title">Order Id</p>
+                                        </div>
+                                        <div class="s0212_order_id_info_main_wrapper">
+                                            <span>:</span> <span class="s0212_order_id_info">Order#21412</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s0212_order_id_main_wrapper">
+                                    <div class="s0212_order_id_info_wrapper">
+                                        <div class="s0212_order_id_wrapper">
+                                            <p class="s0212_order-id_title">Order Date</p>
+                                        </div>
+                                        <div class="s0212_order_id_info_main_wrapper">
+                                            <span>:</span> <span class="s0212_order_id_info">31th jan 2021</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s0212_order_id_main_wrapper">
+                                    <div class="s0212_order_id_info_wrapper">
+                                        <div class="s0212_order_id_wrapper">
+                                            <p class="s0212_order-id_title">Estimate Delivery Date</p>
+                                        </div>
+                                        <div class="s0212_order_id_info_main_wrapper">
+                                            <span>:</span> <span class="s0212_order_id_info">31th jan 2021</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s0212_order_id_main_wrapper">
+                                    <div class="s0212_order_id_info_wrapper">
+                                        <div class="s0212_order_id_wrapper">
+                                            <p class="s0212_order-id_title">Payment Status</p>
+                                        </div>
+                                        <div class="s0212_order_id_info_main_wrapper">
+                                            <span>:</span> <span class="s0212_order_id_info">Cash on Delivery</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- order address area -->
+                        <div class="s0212_delivery_order_address-area_main_wrapper">
+                            <div class="s0212_delivery_address_title_wrapper">
+                                <p class="s0212_delivery_address_title">Delivery Address</p>
+                            </div>
+                            <div class="s0212_delivery_address_content_wrapper">
+                                <div class="s0212_location_top_area">
+                                    <div class="s0212_delivery_location_wrapper">
+                                        <div class="s0212_address_number_wrapper">
+                                            <span class="s0212_address_number">Address 01</span>
+                                        </div>
+                                        <div class="s0212_delivery_location">
+                                            <span class="s0212_delivery_option">Home</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="s0212_location_text_wrapper">
+                                        <span class="s0212_location_text_wrapper">Vincent Oliver</span>
+                                    </div>
+
+                                    <div class="s0212_phone_number_wrapper">
+                                        <span class="s0212_phone_number">01756522222</span>
+                                    </div>
+                                </div>
+
+                                <div class="s0212_delivary_address_wrapper">
+                                    <span class="s0212_delivary_address">Flat - A5, House - 668, Road - 09, Mirpur DOHS,
+                                        Dhaka, Bangladesh</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <!-- order details fotter area  for mobile view-->
+                <div class="s0212_order_details_footer_area_main_wrapper">
+                    <div class="s0212_footer_top_and_review_area_wrapper">
+                        <div class="s0212_product_info_area">
+                            <div class="s0212_product_img_wrapper">
+                                <img src="/images/Item 12.jpg" alt="">
+                            </div>
+                            <div class="s0212_product_info">
+                                <!-- product name and quantity -->
+                                <div class="product_name_quantyt_main_warapper">
+                                    <div class="s0212_product_name-wrapper">
+                                        <span class="s0212_product_name">Potato</span>
+                                    </div>
+                                    <div class="s0212_product_qty_wrapper">
+                                        <span class="s0212_product_qty">Qty:125</span>
+                                    </div>
+                                </div>
+
+                                <!-- product weight -->
+                                <div class="s0212_product_weight_wrapper">
+                                    <span class="s0212_product_weight">02kg</span>
+                                </div>
+
+                                <!-- product price wrapper -->
+                                <div class="s0212_product_price_wrapper">
+                                    <div class="s0212_old_price_wrapper ">
+                                        <span class="s0212_old_price s0212_old_price_delete">BDT
+                                            1000</span>
+                                    </div>
+                                    <div class="s0212_new_price_wrapper">
+                                        <span class="s0212_new_price">BDT 950</span>
+                                    </div>
+                                </div>
+
+                                <!-- write a review option -->
+                                <div class="s0212_write_review_text_wrapper">
+                                    <span class="s0212_write_review_text">Write a review</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- product review area -->
+
+                        <div class="s0212_product_review_main_wrapper">
+                            <div class="s0212_drop_your_review_text_wrapper">
+                                <p class="s0212_drop_your_review_text">Drop your review</p>
+                            </div>
+
+                            <!-- rating area -->
+                            <div class="s0212_product_rating_wrapper">
+                                <ul class="s0212_product_rating">
+                                    <li> <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 15 15">
+                                                <path id="Star"
+                                                    d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                                    transform="translate(-54 -64)" fill="#ffc312" />
+                                            </svg>
+                                        </span></li>
+                                    <li> <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 15 15">
+                                                <path id="Star"
+                                                    d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                                    transform="translate(-54 -64)" fill="#ffc312" />
+                                            </svg>
+                                        </span></li>
+                                    <li> <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 15 15">
+                                                <path id="Star"
+                                                    d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                                    transform="translate(-54 -64)" fill="#ffc312" />
+                                            </svg>
+                                        </span></li>
+                                    <li> <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 15 15">
+                                                <path id="Star"
+                                                    d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                                    transform="translate(-54 -64)" fill="#ffc312" />
+                                            </svg>
+                                        </span></li>
+                                    <li> <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 15 15">
+                                                <path id="Star"
+                                                    d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                                    transform="translate(-54 -64)" fill="#1e272e" opacity="0.1" />
+                                            </svg>
+                                        </span></li>
+                                </ul>
+                            </div>
+
+                            <!-- input review field -->
+                            <form class="s0212_review_form">
+                                <div class="s0212_input_review_box">
+                                    <input class="s0212_review_field" type="text" placeholder="Your review">
+                                </div>
+
+                                <div class="s0212_review_submit_button_wrapper">
+                                    <input class="s0212_review_submit_button" type="button" value="Submit">
+                                </div>
+                            </form>
+
+                            <!-- order details footer product area -->
+                            <div class="s0212_order_details_footer_product_area">
+                                <div class="s0212_product_info_area">
+                                    <div class="s0212_product_img_wrapper">
+                                        <img src="/images/Item 13.jpg" alt="">
+                                    </div>
+                                    <div class="s0212_product_info">
+                                        <!-- product name and quantity -->
+                                        <div class="product_name_quantyt_main_warapper">
+                                            <div class="s0212_product_name-wrapper">
+                                                <span class="s0212_product_name">Potato</span>
+                                            </div>
+                                            <div class="s0212_product_qty_wrapper">
+                                                <span class="s0212_product_qty">Qty:125</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- product weight -->
+                                        <div class="s0212_product_weight_wrapper">
+                                            <span class="s0212_product_weight">02kg</span>
+                                        </div>
+
+                                        <!-- product price wrapper -->
+                                        <div class="s0212_product_price_wrapper">
+                                            <div class="s0212_old_price_wrapper ">
+                                                <span class="s0212_old_price s0212_old_price_delete">BDT
+                                                    1000</span>
+                                            </div>
+                                            <div class="s0212_new_price_wrapper">
+                                                <span class="s0212_new_price">BDT 950</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- write a review option -->
+                                        <div class="s0212_write_review_text_wrapper">
+                                            <span class="s0212_write_review_text">Write a review</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="s0212_product_info_area">
+                                    <div class="s0212_product_img_wrapper">
+                                        <img src="/images/Item 14.jpg" alt="">
+                                    </div>
+                                    <div class="s0212_product_info">
+                                        <!-- product name and quantity -->
+                                        <div class="product_name_quantyt_main_warapper">
+                                            <div class="s0212_product_name-wrapper">
+                                                <span class="s0212_product_name">Potato</span>
+                                            </div>
+                                            <div class="s0212_product_qty_wrapper">
+                                                <span class="s0212_product_qty">Qty:125</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- product weight -->
+                                        <div class="s0212_product_weight_wrapper">
+                                            <span class="s0212_product_weight">02kg</span>
+                                        </div>
+
+                                        <!-- product price wrapper -->
+                                        <div class="s0212_product_price_wrapper">
+                                            <div class="s0212_old_price_wrapper ">
+                                                <span class="s0212_old_price s0212_old_price_delete">BDT
+                                                    1000</span>
+                                            </div>
+                                            <div class="s0212_new_price_wrapper">
+                                                <span class="s0212_new_price">BDT 950</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- write a review option -->
+                                        <div class="s0212_write_review_text_wrapper">
+                                            <span class="s0212_write_review_text">Write a review</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- sub total baner -->
+                            <div class="s0212_sub_total_baner_wrapper">
+                                <div class="s0212_sub_total_baner">
+                                    <div class="s0212_sub_total_priceing_container">
+                                        <div class="s0212_sub_total_title_wrapper">
+                                            <span class="s0212_sub_total_title">Sub total</span>
+                                        </div>
+                                        <div class="s0212_bdt_total_price_wrapper">
+                                            <span class="s0212_bdt_total_price">BDT 28500</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- order cancel button area -->
+                                <div class="s0212_order_cancel_button_wrapper">
+                                    <div class="s0212_order_cancel_button">
+                                        <button>Order Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  order details fotter area  for pc view -->
+                <div class="s0212_order_details_product_top_area_wrapper">
+                    <div class="s0212_order_details_product_top_area">
+                        <div class="s0212_product_image_info_area">
+                            <div class="s0212_product_image_wrapper">
+                                <img src="./images/Item 13.jpg" alt="">
+                            </div>
+
+                            <div class="s0212_product_price_weight_wrapper">
+                                <div class="s0212_product_name_wrapper">
+                                    <span class="s0212_product_name">Potato</span>
+                                </div>
+                                <div class="s0212_product_weight_wrapper">
+                                    <span class="s0212_product_weight">05kg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="s0212_order_product_left_side_content_wrapper">
+                            <!-- product qunatity -->
+                            <div class="s0212_product_qty_wrapper">
+                                <span class="s0212_product_qty_text">Qty:20</span>
+                            </div>
+                            <!-- product price -->
+                            <div class="s0212_product_price_wrapper">
+                                <div class="s0212_old_price_wrapper ">
+                                    <span class="s0212_old_price s0212_old_price_delete">BDT
+                                        1000</span>
+                                </div>
+                                <div class="s0212_new_price_wrapper">
+                                    <span class="s0212_new_price">BDT 950</span>
+                                </div>
+                            </div>
+
+                            <!-- write review section -->
+                            <div class="s0212_write_review_text_wrapper">
+
+                                <span class="s0212_write_review_text">Write a review</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- drop review area -->
+                <div class="s0212_drop_review_main_wrapper">
+                    <div class="s0212_drop_your_review_text_wrapper">
+                        <span class="s0212_drop_your_review_text">Drop your review</span>
+                    </div>
+
+                    <!-- review rating area -->
+                    <div class="s0212_review_rating_wrapper">
+                        <ul class="s0212_review_rating">
+                            <li> <span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                        viewBox="0 0 15 15">
+                                        <path id="Star"
+                                            d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                            transform="translate(-54 -64)" fill="#ffc312" />
+                                    </svg>
+                                </span> </li>
+                            <li> <span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                        viewBox="0 0 15 15">
+                                        <path id="Star"
+                                            d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                            transform="translate(-54 -64)" fill="#ffc312" />
+                                    </svg>
+                                </span> </li>
+                            <li> <span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                        viewBox="0 0 15 15">
+                                        <path id="Star"
+                                            d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                            transform="translate(-54 -64)" fill="#ffc312" />
+                                    </svg>
+                                </span> </li>
+                            <li> <span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                        viewBox="0 0 15 15">
+                                        <path id="Star"
+                                            d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                            transform="translate(-54 -64)" fill="#ffc312" />
+                                    </svg>
+                                </span> </li>
+                            <li> <span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                        viewBox="0 0 15 15">
+                                        <path id="Star"
+                                            d="M61.5,76.058,66.135,79l-1.226-5.549L69,69.719l-5.394-.487L61.5,64l-2.107,5.232L54,69.719l4.091,3.731L56.865,79Z"
+                                            transform="translate(-54 -64)" fill="#1e272e" opacity="0.1" />
+                                    </svg>
+                                </span> </li>
+                        </ul>
+                    </div>
+
+                    <!-- drop review input form -->
+                    <form action="#" class="s0212_drop_review_form_wrapper">
+                        <div class="s0212_input_field_wrapper">
+                            <input class="s0212_input_field_review" type="text" placeholder="Your review">
+                        </div>
+
+                        <div class="s0212_submit_button_wrapper">
+                            <input class="s0212_submit_button" type="button" value="Submit">
+                        </div>
+                    </form>
+
+                    <!-- more product -->
+                    <div class="fotter_bottom_more_product_wrapper">
+                        <div class="fotter_bottom_more_product_area">
+                            <div class="fotter_bottom_more_product">
+                                <div class="s0212_order_details_product_top_area">
+                                    <div class="s0212_product_image_info_area">
+                                        <div class="s0212_product_image_wrapper">
+                                            <img src="./images/Item 15.jpg" alt="">
+                                        </div>
+
+                                        <div class="s0212_product_price_weight_wrapper">
+                                            <div class="s0212_product_name_wrapper">
+                                                <span class="s0212_product_name">Potato</span>
+                                            </div>
+                                            <div class="s0212_product_weight_wrapper">
+                                                <span class="s0212_product_weight">05kg</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="s0212_order_product_left_side_content_wrapper">
+                                        <!-- product qunatity -->
+                                        <div class="s0212_product_qty_wrapper">
+                                            <span class="s0212_product_qty_text">Qty:20</span>
+                                        </div>
+                                        <!-- product price -->
+                                        <div class="s0212_product_price_wrapper">
+                                            <div class="s0212_old_price_wrapper ">
+                                                <span class="s0212_old_price s0212_old_price_delete">BDT
+                                                    1000</span>
+                                            </div>
+                                            <div class="s0212_new_price_wrapper">
+                                                <span class="s0212_new_price">BDT 950</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- write review section -->
+                                        <div class="s0212_write_review_text_wrapper">
+
+                                            <span class="s0212_write_review_text">Write a review</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fotter_bottom_more_product">
+                                <div class="s0212_order_details_product_top_area">
+                                    <div class="s0212_product_image_info_area">
+                                        <div class="s0212_product_image_wrapper">
+                                            <img src="./images/Item 20.jpg" alt="">
+                                        </div>
+
+                                        <div class="s0212_product_price_weight_wrapper">
+                                            <div class="s0212_product_name_wrapper">
+                                                <span class="s0212_product_name">Potato</span>
+                                            </div>
+                                            <div class="s0212_product_weight_wrapper">
+                                                <span class="s0212_product_weight">05kg</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="s0212_order_product_left_side_content_wrapper">
+                                        <!-- product qunatity -->
+                                        <div class="s0212_product_qty_wrapper">
+                                            <span class="s0212_product_qty_text">Qty:20</span>
+                                        </div>
+                                        <!-- product price -->
+                                        <div class="s0212_product_price_wrapper">
+                                            <div class="s0212_old_price_wrapper ">
+                                                <span class="s0212_old_price s0212_old_price_delete">BDT
+                                                    1000</span>
+                                            </div>
+                                            <div class="s0212_new_price_wrapper">
+                                                <span class="s0212_new_price">BDT 950</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- write review section -->
+                                        <div class="s0212_write_review_text_wrapper">
+
+                                            <span class="s0212_write_review_text">Write a review</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- order cancel and sub total baner -->
+                    <div class="s0201_large_device_subtotal_baner">
+                        <div class="s0212_sub_total_baner">
+                            <div class="s0212_sub_total_priceing_container">
+                                <div class="s0212_sub_total_content">
+                                    <div class="s0212_sub_total_title_wrapper">
+                                        <span class="s0212_sub_total_title">Sub total</span>
+                                    </div>
+                                    <div class="s0212_bdt_total_price_wrapper">
+                                        <span class="s0212_bdt_total_price">BDT 28500</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- order cancel button area -->
+                        <div class="s0212_order_cancel_button_wrapper">
+                            <div class="s0212_order_cancel_button">
+                                <button>Order Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
